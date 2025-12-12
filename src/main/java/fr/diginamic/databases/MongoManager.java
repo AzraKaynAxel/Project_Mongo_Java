@@ -8,7 +8,15 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.result.InsertManyResult;
+import com.mongodb.client.result.InsertOneResult;
 import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MongoManager {
 
@@ -58,5 +66,120 @@ public class MongoManager {
             this.client.close();
             System.out.println("Connection closed");
         }
+    }
+
+    /**
+     * @return
+     *
+     * Rourne la liste des BDD
+     */
+    public List<String> listDatabases() {
+        try {
+            List<String> databases = new ArrayList<>();
+            MongoIterable<String> dbNames = this.client.listDatabaseNames();
+            dbNames.into(databases);
+            return databases;
+        }  catch (Exception e) {
+            throw new RuntimeException("Unable to list databases", e);
+        }
+    }
+
+    /**
+     * @return
+     *
+     * Rourne la liste des collections
+     */
+    public List<String> listCollections() {
+        try {
+            List<String> collections = new ArrayList<>();
+            MongoIterable<String> collNames = this.database.listCollectionNames();
+            collNames.into(collections);
+            return collections;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to list collections", e);
+        }
+    }
+
+    /**
+     * @param document
+     * @return
+     *
+     * Viens faire une insertion unique d'un document
+     */
+    // InsertOne
+    public Map<String, Object> createOneDocument(Document document) {
+        try {
+            InsertOneResult result = this.collection.insertOne(document);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowlegded", result.wasAcknowledged());
+            response.put("inserteId", result.getInsertedId());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to insert document", e);
+        }
+    }
+
+    /**
+     * @param documents
+     * @return
+     *
+     * Viens faire plusieurs insertions de document
+     */
+    // InsertMany
+    public Map<String, Object> createManyDocuments(
+            List<Document> documents
+    ) {
+        try {
+            InsertManyResult result =
+                    this.collection.insertMany(documents);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowledged", result.wasAcknowledged());
+            response.put("insertedIds", result.getInsertedIds());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to insert documents", e
+            );
+        }
+    }
+
+
+    /**
+     * Getter for database
+     *
+     * @return database
+     */
+    public MongoDatabase getDatabase() {
+        return database;
+    }
+
+    /**
+     * Setter for database
+     *
+     * @param dbName
+     */
+    public void setDatabase(String dbName) {
+        this.database = this.client.getDatabase(dbName);
+
+        // Réaffectation obligatoire de la collection
+        this.collection = this.database.getCollection(this.collection.getNamespace().getCollectionName());
+    }
+
+    /**
+     * Getter for collection
+     *
+     * @return collection
+     */
+    public MongoCollection<Document> getCollection() {
+        return collection;
+    }
+
+    /**
+     * Setter for collection
+     *
+     * @param collName
+     */
+    public void setCollection(String collName) {
+        this.collection = this.database.getCollection(collName);
     }
 }
