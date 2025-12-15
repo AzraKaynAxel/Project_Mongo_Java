@@ -56,12 +56,12 @@ public class RunnerApplication {
                             .append("quantity", 96)
             );
 
-            /*Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
+            Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
             System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");*/
 
         // Mise à jour d'une ou plusieurs données
             // Mes à jour un champ du document
-            /*Map<String, Object> updateOne = mongoManager.updateOneDocument(
+            Map<String, Object> updateOne = mongoManager.updateOneDocument(
                     new Document("_id", new ObjectId("693c3c330e2a3a3c80ef90a6")),
                     new Document("$set", new Document("price", 1.25))
             );
@@ -79,11 +79,11 @@ public class RunnerApplication {
                     new Document(documentWatermelon),
                     new Document("$unset", new Document("description", ""))
             );
-            System.out.println("update_one_document: " + updatedOne);*/
+            System.out.println("update_one_document: " + updatedOne);
 
         // Manipulation de tableau
             // Ajouter un élément à un tableau
-            /*Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
+            Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
                     new Document("name", "Apple"),
                     new Document("$push", new Document("alternative_colors", "Green"))
             );
@@ -108,11 +108,11 @@ public class RunnerApplication {
                     new Document("name", "Grapes"),
                     new Document("$pop", new Document("alternative_colors", 1))
             );
-            System.out.println(deletedLastElementTab);*/
+            System.out.println(deletedLastElementTab);
 
         // Suppression de document
             // Supprimer un fruit grâce à son id
-            /*Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
+            Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
             System.out.println("delete_one_document: " + deleteWitheId);
 
             // Supprimer plusieurs fruits et légume avec la couleur qui sont verts
@@ -122,7 +122,7 @@ public class RunnerApplication {
                             new Document("alternative_colors", "Green")
                     ))
             );
-            System.out.println("delete_many_documents: " + deleteWitheColor);*/
+            System.out.println("delete_many_documents: " + deleteWitheColor);
 
         // Requête de recherche
             // Rechercher tous les éléments rouges
@@ -145,7 +145,6 @@ public class RunnerApplication {
             // Rechercher le fruit qui a la plus grande quantité.
             Document searchWitheMoreQuantity = mongoManager.readOneDocumentAvecTri(new Document(), new Document("quantity", -1));
             System.out.println("read_one_documents: " + searchWitheMoreQuantity);
-
 
 
             // Fermeture de la connexion
