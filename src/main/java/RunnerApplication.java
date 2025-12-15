@@ -57,7 +57,7 @@ public class RunnerApplication {
             );
 
             Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
-            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");*/
+            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");
 
         // Mise à jour d'une ou plusieurs données
             // Mes à jour un champ du document
