@@ -3,6 +3,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -81,7 +82,7 @@ public class RunnerApplication {
 
         // Manipulation de tableau
             // Ajouter un élément à un tableau
-            Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
+            /*Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
                     new Document("name", "Apple"),
                     new Document("$push", new Document("alternative_colors", "Green"))
             );
@@ -106,7 +107,22 @@ public class RunnerApplication {
                     new Document("name", "Grapes"),
                     new Document("$pop", new Document("alternative_colors", 1))
             );
-            System.out.println(deletedLastElementTab);
+            System.out.println(deletedLastElementTab);*/
+
+        // Suppression de document
+            // Supprimer un fruit grâce à son id
+            Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
+            System.out.println("delete_one_document: " + deleteWitheId);
+
+            // Supprimer plusieurs fruits et légume avec la couleur qui sont verts
+            Map<String, Object > deleteWitheColor = mongoManager.deleteManyDocuments(
+                    new Document("$or", Arrays.asList(
+                            new Document("color", "Green"),
+                            new Document("alternative_colors", "Green")
+                    ))
+            );
+            System.out.println("delete_many_documents: " + deleteWitheColor);
+
 
 
             // Fermeture de la connexion
