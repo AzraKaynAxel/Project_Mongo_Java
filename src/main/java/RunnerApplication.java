@@ -1,5 +1,6 @@
 import fr.diginamic.databases.MongoManager;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.io.InputStream;
 import java.util.List;
@@ -26,7 +27,7 @@ public class RunnerApplication {
             MongoManager mongoManager = new MongoManager(uri, dbName, collName);
 
             // Création de plusieurs documents
-            List<Document> documents = List.of(
+            /*List<Document> documents = List.of(
                     new Document("name", "garlic")
                             .append("category", "Vegetable")
                             .append("color", "white")
@@ -45,7 +46,14 @@ public class RunnerApplication {
             );
 
             Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
-            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");
+            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");*/
+
+            // Mise à jour d'une ou plusieurs données
+            Map<String, Object> updateOne = mongoManager.updateOneDocument(
+                    new Document("_id", new ObjectId("693c3c330e2a3a3c80ef90a6")),
+                    new Document("$set", new Document("price", 1.25))
+            );
+            System.out.println("update_many_documents: " + updateOne);
 
             // Fermeture de la connexion
             mongoManager.closeConnection();
