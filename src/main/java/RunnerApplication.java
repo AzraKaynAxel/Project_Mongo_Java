@@ -57,7 +57,7 @@ public class RunnerApplication {
             );
 
             Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
-            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");*/
+            System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");
 
         // Mise à jour d'une ou plusieurs données
             // Mes à jour un champ du document
@@ -68,18 +68,18 @@ public class RunnerApplication {
             System.out.println("update_many_documents: " + updateOne);
 
             // Rajoute un champ au document
-            Map<String, Object> updateOne = mongoManager.updateOneDocument(
+            Map<String, Object> updateOneField = mongoManager.updateOneDocument(
                     new Document(documentWatermelon),
                     new Document("$set", new Document("description", "This fruits have been import of Hawaii"))
             );
-            System.out.println("update_one_document: " + updateOne);
+            System.out.println("update_one_document: " + updateOneField);
 
             // Supprimer une propriété d'un produit existant
-            Map<String, Object> updatedOne = mongoManager.updateOneDocument(
+            Map<String, Object> updatedOneProperties = mongoManager.updateOneDocument(
                     new Document(documentWatermelon),
                     new Document("$unset", new Document("description", ""))
             );
-            System.out.println("update_one_document: " + updatedOne);
+            System.out.println("update_one_document: " + updatedOneProperties);
 
         // Manipulation de tableau
             // Ajouter un élément à un tableau
