@@ -9,6 +9,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertManyResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
@@ -186,6 +187,48 @@ public class MongoManager {
         } catch (Exception e) {
             throw new RuntimeException(
                     "Unable to update documents", e
+            );
+        }
+    }
+
+    /**
+     * @param query
+     * @return
+     *
+     * Suppression d'un document
+     */
+    // DeleteOne
+    public Map<String, Object> deleteOneDocument(Document query) {
+        try {
+            DeleteResult result = this.collection.deleteOne(query);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowledged", result.wasAcknowledged());
+            response.put("deletedCount", result.getDeletedCount());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to delete document", e
+            );
+        }
+    }
+
+    /**
+     * @param query
+     * @return
+     *
+     * Suppression de plusieurs documents
+     */
+    // DeleteMany
+    public Map<String, Object> deleteManyDocuments(Document query) {
+        try {
+            DeleteResult result = this.collection.deleteMany(query);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowledged", result.wasAcknowledged());
+            response.put("deletedCount", result.getDeletedCount());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to delete documents", e
             );
         }
     }
