@@ -2,6 +2,7 @@ import fr.diginamic.databases.MongoManager;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import javax.print.Doc;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -111,7 +112,7 @@ public class RunnerApplication {
 
         // Suppression de document
             // Supprimer un fruit grâce à son id
-            Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
+            /*Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
             System.out.println("delete_one_document: " + deleteWitheId);
 
             // Supprimer plusieurs fruits et légume avec la couleur qui sont verts
@@ -121,7 +122,29 @@ public class RunnerApplication {
                             new Document("alternative_colors", "Green")
                     ))
             );
-            System.out.println("delete_many_documents: " + deleteWitheColor);
+            System.out.println("delete_many_documents: " + deleteWitheColor);*/
+
+        // Requête de recherche
+            // Rechercher tous les éléments rouges
+            List<Document> searchWitheColorRed = mongoManager.readManyDocuments(
+                    new Document("$or", Arrays.asList(
+                            new Document("color", "Red"),
+                            new Document("alternative_colors", "Red")
+                    )),
+                    new Document("name", 1).append("color", 1).append("alternative_colors", 1).append("_id", 0)
+            );
+            System.out.println("read_many_documents: " + searchWitheColorRed);
+
+            // Rechercher tous les éléments dont le prix est inférieur à 2.00 et affiche uniquement le nom et le prix
+            List<Document> searchWithePriceInf2 = mongoManager.readManyDocuments(
+                    new Document("price", new Document("$lt", 2.00)),
+                    new Document("name", 1).append("price", 1).append("_id", 0)
+            );
+            System.out.println("read_many_documents: " + searchWithePriceInf2);
+
+            // Rechercher le fruit qui a la plus grande quantité.
+            Document searchWitheMoreQuantity = mongoManager.readOneDocumentAvecTri(new Document(), new Document("quantity", -1));
+            System.out.println("read_one_documents: " + searchWitheMoreQuantity);
 
 
 
