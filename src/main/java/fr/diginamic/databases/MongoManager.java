@@ -11,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.result.InsertManyResult;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -140,6 +141,28 @@ public class MongoManager {
             throw new RuntimeException(
                     "Unable to insert documents", e
             );
+        }
+    }
+
+    /**
+     * @param query
+     * @param update
+     * @return
+     *
+     * Pour fair une update sur un document
+     */
+    // UpdateOne
+    public Map<String, Object> updateOneDocument(Document query, Document update) {
+        try {
+            UpdateResult result = this.collection.updateOne(query, update);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowledged", result.wasAcknowledged());
+            response.put("matchedCount", result.getMatchedCount());
+            response.put("modifiedCount", result.getModifiedCount());
+            response.put("upsertedId", result.getUpsertedId());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to update document", e);
         }
     }
 
