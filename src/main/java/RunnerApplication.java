@@ -56,16 +56,16 @@ public class RunnerApplication {
                             .append("quantity", 96)
             );
 
-            /*Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
+            Map<String, Object> createdMany = mongoManager.createManyDocuments(documents);
             System.out.println("createdMany: " + createdMany + " à bien été créer avec succès");*/
 
         // Mise à jour d'une ou plusieurs données
             // Mes à jour un champ du document
-            /*Map<String, Object> updateOne = mongoManager.updateOneDocument(
+            Map<String, Object> updateOne = mongoManager.updateOneDocument(
                     new Document("_id", new ObjectId("693c3c330e2a3a3c80ef90a6")),
                     new Document("$set", new Document("price", 1.25))
             );
-            System.out.println("update_many_documents: " + updateOne);*/
+            System.out.println("update_many_documents: " + updateOne);
 
             // Rajoute un champ au document
             Map<String, Object> updateOne = mongoManager.updateOneDocument(
@@ -80,21 +80,6 @@ public class RunnerApplication {
                     new Document("$unset", new Document("description", ""))
             );
             System.out.println("update_one_document: " + updatedOne);
-
-
-            // Rajoute un champ au document
-            Map<String, Object> updateOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$set", new Document("description", "This fruits have been import of Hawaii"))
-            );
-            System.out.println("update_one_document: " + updateOne);
-
-            // Supprimer une propriété d'un produit existant
-            Map<String, Object> updatedOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$unset", new Document("description", ""))
-            );
-            System.out.println("update_one_document: " + updatedOne);*/
 
         // Manipulation de tableau
             // Ajouter un élément à un tableau
@@ -125,50 +110,6 @@ public class RunnerApplication {
             );
             System.out.println(deletedLastElementTab);
 
-
-            // Rajoute un champ au document
-            Map<String, Object> updateOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$set", new Document("description", "This fruits have been import of Hawaii"))
-            );
-            System.out.println("update_one_document: " + updateOne);
-
-            // Supprimer une propriété d'un produit existant
-            Map<String, Object> updatedOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$unset", new Document("description", ""))
-            );
-            System.out.println("update_one_document: " + updatedOne);*/
-
-        // Manipulation de tableau
-            // Ajouter un élément à un tableau
-            /*Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
-                    new Document("name", "Apple"),
-                    new Document("$push", new Document("alternative_colors", "Green"))
-            );
-            System.out.println("update_one_document: " + updateOneTab);
-
-            // Ajouter plusieurs éléments à un tableau
-            Map<String, Object> updatedMany = mongoManager.updateManyDocuments(
-                    new Document("name", "Grapes"),
-                    new Document("$push", new Document("alternative_colors", new Document("$each", List.of("Yellow", "Green", "Red"))))
-            );
-            System.out.println("update_many_documents: " + updatedMany);
-
-            // Supprimer un élément d'un tableau
-            Map<String, Object> deleteOneElementTab = mongoManager.updateOneDocument(
-                    new Document("name", "Apple"),
-                    new Document("$pull", new Document("alternative_colors", "Green"))
-            );
-            System.out.println(deleteOneElementTab);
-
-            // Supprimer le dernier élément d'un tableau
-            Map<String, Object> deletedLastElementTab = mongoManager.updateOneDocument(
-                    new Document("name", "Grapes"),
-                    new Document("$pop", new Document("alternative_colors", 1))
-            );
-            System.out.println(deletedLastElementTab);*/
-
         // Suppression de document
             // Supprimer un fruit grâce à son id
             Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
@@ -182,65 +123,6 @@ public class RunnerApplication {
                     ))
             );
             System.out.println("delete_many_documents: " + deleteWitheColor);
-
-
-
-            // Rajoute un champ au document
-            Map<String, Object> updateOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$set", new Document("description", "This fruits have been import of Hawaii"))
-            );
-            System.out.println("update_one_document: " + updateOne);
-
-            // Supprimer une propriété d'un produit existant
-            Map<String, Object> updatedOne = mongoManager.updateOneDocument(
-                    new Document(documentWatermelon),
-                    new Document("$unset", new Document("description", ""))
-            );
-            System.out.println("update_one_document: " + updatedOne);*/
-
-        // Manipulation de tableau
-            // Ajouter un élément à un tableau
-            /*Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
-                    new Document("name", "Apple"),
-                    new Document("$push", new Document("alternative_colors", "Green"))
-            );
-            System.out.println("update_one_document: " + updateOneTab);
-
-            // Ajouter plusieurs éléments à un tableau
-            Map<String, Object> updatedMany = mongoManager.updateManyDocuments(
-                    new Document("name", "Grapes"),
-                    new Document("$push", new Document("alternative_colors", new Document("$each", List.of("Yellow", "Green", "Red"))))
-            );
-            System.out.println("update_many_documents: " + updatedMany);
-
-            // Supprimer un élément d'un tableau
-            Map<String, Object> deleteOneElementTab = mongoManager.updateOneDocument(
-                    new Document("name", "Apple"),
-                    new Document("$pull", new Document("alternative_colors", "Green"))
-            );
-            System.out.println(deleteOneElementTab);
-
-            // Supprimer le dernier élément d'un tableau
-            Map<String, Object> deletedLastElementTab = mongoManager.updateOneDocument(
-                    new Document("name", "Grapes"),
-                    new Document("$pop", new Document("alternative_colors", 1))
-            );
-            System.out.println(deletedLastElementTab);*/
-
-        // Suppression de document
-            // Supprimer un fruit grâce à son id
-            /*Map<String, Object> deleteWitheId = mongoManager.deleteOneDocument(new Document("_id", new ObjectId("693c3c330e2a3a3c80ef9091")));
-            System.out.println("delete_one_document: " + deleteWitheId);
-
-            // Supprimer plusieurs fruits et légume avec la couleur qui sont verts
-            Map<String, Object > deleteWitheColor = mongoManager.deleteManyDocuments(
-                    new Document("$or", Arrays.asList(
-                            new Document("color", "Green"),
-                            new Document("alternative_colors", "Green")
-                    ))
-            );
-            System.out.println("delete_many_documents: " + deleteWitheColor);*/
 
         // Requête de recherche
             // Rechercher tous les éléments rouges
@@ -263,7 +145,6 @@ public class RunnerApplication {
             // Rechercher le fruit qui a la plus grande quantité.
             Document searchWitheMoreQuantity = mongoManager.readOneDocumentAvecTri(new Document(), new Document("quantity", -1));
             System.out.println("read_one_documents: " + searchWitheMoreQuantity);
-
 
 
             // Fermeture de la connexion
