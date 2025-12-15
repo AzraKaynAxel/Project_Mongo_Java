@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
 import com.mongodb.ServerApiVersion;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -232,6 +233,47 @@ public class MongoManager {
             );
         }
     }
+
+    /**
+     * @param query
+     * @param mySort
+     * @return
+     *
+     * Cherche un document selon un tri spécifique
+     */
+    // FindOne
+    public Document readOneDocumentAvecTri(Document query, Document mySort) {
+        try {
+            return this.collection.find(query).sort(mySort).first();
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to read document", e
+            );
+        }
+    }
+
+    /**
+     * @param query
+     * @param projection
+     * @return
+     *
+     * Cherche plusieurs documents et filtre l'affichage de ce que l'on veut
+     */
+    // Find
+    public List<Document> readManyDocuments(Document query, Document projection) {
+        try {
+            List<Document> results = new ArrayList<>();
+            FindIterable<Document> documents =
+                    this.collection.find(query).projection(projection);
+            documents.into(results);
+            return results;
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to read documents", e
+            );
+        }
+    }
+
 
     /**
      * Getter for database
