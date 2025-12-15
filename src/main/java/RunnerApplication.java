@@ -1,5 +1,6 @@
 import fr.diginamic.databases.MongoManager;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.io.InputStream;
 import java.util.List;
