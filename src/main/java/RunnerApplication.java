@@ -80,6 +80,50 @@ public class RunnerApplication {
             System.out.println("update_one_document: " + updatedOne);
 
 
+            // Rajoute un champ au document
+            Map<String, Object> updateOne = mongoManager.updateOneDocument(
+                    new Document(documentWatermelon),
+                    new Document("$set", new Document("description", "This fruits have been import of Hawaii"))
+            );
+            System.out.println("update_one_document: " + updateOne);
+
+            // Supprimer une propriété d'un produit existant
+            Map<String, Object> updatedOne = mongoManager.updateOneDocument(
+                    new Document(documentWatermelon),
+                    new Document("$unset", new Document("description", ""))
+            );
+            System.out.println("update_one_document: " + updatedOne);*/
+
+        // Manipulation de tableau
+            // Ajouter un élément à un tableau
+            Map<String, Object> updateOneTab = mongoManager.updateOneDocument(
+                    new Document("name", "Apple"),
+                    new Document("$push", new Document("alternative_colors", "Green"))
+            );
+            System.out.println("update_one_document: " + updateOneTab);
+
+            // Ajouter plusieurs éléments à un tableau
+            Map<String, Object> updatedMany = mongoManager.updateManyDocuments(
+                    new Document("name", "Grapes"),
+                    new Document("$push", new Document("alternative_colors", new Document("$each", List.of("Yellow", "Green", "Red"))))
+            );
+            System.out.println("update_many_documents: " + updatedMany);
+
+            // Supprimer un élément d'un tableau
+            Map<String, Object> deleteOneElementTab = mongoManager.updateOneDocument(
+                    new Document("name", "Apple"),
+                    new Document("$pull", new Document("alternative_colors", "Green"))
+            );
+            System.out.println(deleteOneElementTab);
+
+            // Supprimer le dernier élément d'un tableau
+            Map<String, Object> deletedLastElementTab = mongoManager.updateOneDocument(
+                    new Document("name", "Grapes"),
+                    new Document("$pop", new Document("alternative_colors", 1))
+            );
+            System.out.println(deletedLastElementTab);
+
+
             // Fermeture de la connexion
             mongoManager.closeConnection();
 

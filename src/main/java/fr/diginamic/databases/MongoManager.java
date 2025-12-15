@@ -166,6 +166,29 @@ public class MongoManager {
         }
     }
 
+    /**
+     * @param query
+     * @param update
+     * @return
+     *
+     * Pour faire plusieur Update sur documents
+     */
+    // UpdateMany
+    public Map<String, Object> updateManyDocuments(Document query, Document update) {
+        try {
+            UpdateResult result = this.collection.updateMany(query, update);
+            Map<String, Object> response = new HashMap<>();
+            response.put("acknowledged", result.wasAcknowledged());
+            response.put("matchedCount", result.getMatchedCount());
+            response.put("modifiedCount", result.getModifiedCount());
+            response.put("upsertedId", result.getUpsertedId());
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Unable to update documents", e
+            );
+        }
+    }
 
     /**
      * Getter for database
